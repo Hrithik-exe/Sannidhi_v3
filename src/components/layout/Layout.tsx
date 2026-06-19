@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   BarChart3,
   Bell,
@@ -11,6 +11,8 @@ import {
   Users,
 } from "lucide-react";
 
+import Dock, { type DockItemConfig } from "./Dock";
+
 const navItems = [
   { label: "Dashboard", path: "/", icon: LayoutDashboard, end: true },
   { label: "New Receipt", path: "/receipts", icon: ReceiptText },
@@ -21,13 +23,30 @@ const navItems = [
 ];
 
 export default function Layout() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const dockItems: DockItemConfig[] = navItems.map((item) => {
+    const Icon = item.icon;
+    const active = item.end
+      ? location.pathname === item.path
+      : location.pathname.startsWith(item.path);
+
+    return {
+      label: item.label,
+      icon: <Icon size={19} />,
+      active,
+      onClick: () => navigate(item.path),
+    };
+  });
+
   return (
     <div className="min-h-screen bg-[#070707] text-zinc-100">
       <header className="sticky top-0 z-40 border-b border-[#272017] bg-[#090909]/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1480px] items-center gap-4 px-6 py-3">
           <NavLink to="/" className="flex shrink-0 items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#4b391d] bg-[#17130c] text-sm font-bold text-[#d8aa4a]">
-              ॐ
+            <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#4b391d] bg-[#17130c] text-xs font-bold tracking-wide text-[#d8aa4a]">
+              OM
             </div>
             <div className="leading-tight">
               <p className="text-base font-semibold text-white">
@@ -36,30 +55,6 @@ export default function Layout() {
               <p className="text-xs text-zinc-500">Management Console</p>
             </div>
           </NavLink>
-
-          <nav className="hidden flex-1 items-center justify-center gap-1 xl:flex">
-            {navItems.map((item) => {
-              const Icon = item.icon;
-
-              return (
-                <NavLink
-                  key={item.label}
-                  to={item.path}
-                  end={item.end}
-                  className={({ isActive }) =>
-                    `flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition ${
-                      isActive
-                        ? "bg-[#d8aa4a] text-black"
-                        : "text-zinc-400 hover:bg-[#151515] hover:text-zinc-100"
-                    }`
-                  }
-                >
-                  <Icon size={16} />
-                  {item.label}
-                </NavLink>
-              );
-            })}
-          </nav>
 
           <div className="ml-auto hidden w-72 items-center gap-2 rounded-lg border border-zinc-800 bg-[#101010] px-3 py-2 text-zinc-500 lg:flex">
             <Search size={16} />
@@ -84,9 +79,16 @@ export default function Layout() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1480px] px-6 py-6">
+      <main className="mx-auto max-w-[1480px] px-6 py-6 pb-36">
         <Outlet />
       </main>
+
+      <Dock
+        items={dockItems}
+        panelHeight={68}
+        baseItemSize={50}
+        magnification={70}
+      />
     </div>
   );
 }
