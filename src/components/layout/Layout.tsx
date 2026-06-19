@@ -1,18 +1,18 @@
 import { NavLink, Outlet } from "react-router-dom";
 import {
   BarChart3,
+  Bell,
   History,
   LayoutDashboard,
   LogOut,
   ReceiptText,
   Search,
   Settings,
-  Sparkles,
   Users,
 } from "lucide-react";
 
 const navItems = [
-  { label: "Dashboard", path: "/", icon: LayoutDashboard },
+  { label: "Dashboard", path: "/", icon: LayoutDashboard, end: true },
   { label: "New Receipt", path: "/receipts", icon: ReceiptText },
   { label: "Customers", path: "/customers", icon: Users },
   { label: "Receipt History", path: "/receipt-history", icon: History },
@@ -22,18 +22,18 @@ const navItems = [
 
 export default function Layout() {
   return (
-    <div className="min-h-screen bg-[#050505] text-zinc-100">
-      <header className="sticky top-0 z-40 border-b border-amber-400/10 bg-[#050505]/90 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[1500px] items-center gap-5 px-6 py-4">
+    <div className="min-h-screen bg-[#070707] text-zinc-100">
+      <header className="sticky top-0 z-40 border-b border-[#272017] bg-[#090909]/95 backdrop-blur">
+        <div className="mx-auto flex max-w-[1480px] items-center gap-4 px-6 py-3">
           <NavLink to="/" className="flex shrink-0 items-center gap-3">
-            <div className="grid h-11 w-11 place-items-center rounded-2xl border border-amber-300/30 bg-amber-300/10 text-amber-200 shadow-[0_0_28px_rgba(245,158,11,0.16)]">
-              <Sparkles size={21} />
+            <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#4b391d] bg-[#17130c] text-sm font-bold text-[#d8aa4a]">
+              ॐ
             </div>
-            <div>
-              <p className="text-lg font-semibold tracking-wide text-white">
-                Sannidhi
+            <div className="leading-tight">
+              <p className="text-base font-semibold text-white">
+                Sannidhi Temple
               </p>
-              <p className="text-xs text-amber-200/70">Temple Management</p>
+              <p className="text-xs text-zinc-500">Management Console</p>
             </div>
           </NavLink>
 
@@ -43,13 +43,14 @@ export default function Layout() {
 
               return (
                 <NavLink
-                  key={`${item.label}-${item.path}`}
+                  key={item.label}
                   to={item.path}
+                  end={item.end}
                   className={({ isActive }) =>
-                    `flex items-center gap-2 rounded-xl px-3.5 py-2 text-sm font-medium transition ${
+                    `flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition ${
                       isActive
-                        ? "bg-amber-300 text-black shadow-[0_0_24px_rgba(245,158,11,0.24)]"
-                        : "text-zinc-300 hover:bg-zinc-900 hover:text-amber-100"
+                        ? "bg-[#d8aa4a] text-black"
+                        : "text-zinc-400 hover:bg-[#151515] hover:text-zinc-100"
                     }`
                   }
                 >
@@ -60,23 +61,30 @@ export default function Layout() {
             })}
           </nav>
 
-          <div className="ml-auto hidden min-w-64 items-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-zinc-400 lg:flex">
-            <Search size={17} />
+          <div className="ml-auto hidden w-72 items-center gap-2 rounded-lg border border-zinc-800 bg-[#101010] px-3 py-2 text-zinc-500 lg:flex">
+            <Search size={16} />
             <input
-              className="w-full bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-500"
-              placeholder="Search receipts, customers..."
+              className="w-full bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
+              placeholder="Search receipt, mobile, name"
               type="search"
             />
           </div>
 
-          <button className="flex items-center gap-2 rounded-2xl border border-amber-300/20 bg-amber-300/10 px-4 py-2 text-sm font-semibold text-amber-100 transition hover:border-amber-300/40 hover:bg-amber-300/20">
+          <button
+            className="grid h-10 w-10 place-items-center rounded-lg border border-zinc-800 bg-[#101010] text-zinc-400 transition hover:border-[#4b391d] hover:text-[#d8aa4a]"
+            title="Notifications"
+          >
+            <Bell size={17} />
+          </button>
+
+          <button className="flex items-center gap-2 rounded-lg border border-[#4b391d] bg-[#17130c] px-3 py-2 text-sm font-semibold text-[#d8aa4a] transition hover:bg-[#211a10]">
             <LogOut size={16} />
             Logout
           </button>
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1500px] px-6 py-7">
+      <main className="mx-auto max-w-[1480px] px-6 py-6">
         <Outlet />
       </main>
     </div>
