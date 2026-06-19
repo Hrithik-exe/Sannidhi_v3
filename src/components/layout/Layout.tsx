@@ -1,8 +1,8 @@
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import {
   BarChart3,
-  Bell,
   History,
+  Landmark,
   LayoutDashboard,
   LogOut,
   ReceiptText,
@@ -10,8 +10,6 @@ import {
   Settings,
   Users,
 } from "lucide-react";
-
-import Dock, { type DockItemConfig } from "./Dock";
 
 const navItems = [
   { label: "Dashboard", path: "/", icon: LayoutDashboard, end: true },
@@ -23,72 +21,67 @@ const navItems = [
 ];
 
 export default function Layout() {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  const dockItems: DockItemConfig[] = navItems.map((item) => {
-    const Icon = item.icon;
-    const active = item.end
-      ? location.pathname === item.path
-      : location.pathname.startsWith(item.path);
-
-    return {
-      label: item.label,
-      icon: <Icon size={19} />,
-      active,
-      onClick: () => navigate(item.path),
-    };
-  });
-
   return (
     <div className="min-h-screen bg-[#070707] text-zinc-100">
-      <header className="sticky top-0 z-40 border-b border-[#272017] bg-[#090909]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-[1480px] items-center gap-4 px-6 py-3">
-          <NavLink to="/" className="flex shrink-0 items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-lg border border-[#4b391d] bg-[#17130c] text-xs font-bold tracking-wide text-[#d8aa4a]">
-              OM
+      <header className="sticky top-0 z-40 border-b border-zinc-900 bg-[#070707] px-1 pt-1">
+        <div className="flex items-center gap-5 rounded-2xl border border-zinc-800 bg-[#0b0b0b]/95 px-6 py-3 shadow-[0_18px_60px_rgba(0,0,0,0.35)] backdrop-blur">
+          <NavLink to="/" className="flex min-w-72 items-center gap-3">
+            <div className="grid h-12 w-12 place-items-center rounded-xl border border-[#4b391d] bg-[#17130c] text-[#d8aa4a]">
+              <Landmark size={25} />
             </div>
-            <div className="leading-tight">
-              <p className="text-base font-semibold text-white">
-                Sannidhi Temple
-              </p>
-              <p className="text-xs text-zinc-500">Management Console</p>
-            </div>
+            <p className="text-lg font-semibold text-white">Sannidhi Temple</p>
           </NavLink>
 
-          <div className="ml-auto hidden w-72 items-center gap-2 rounded-lg border border-zinc-800 bg-[#101010] px-3 py-2 text-zinc-500 lg:flex">
-            <Search size={16} />
+          <nav className="flex flex-1 items-center justify-center gap-2">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+
+              return (
+                <NavLink
+                  key={item.label}
+                  to={item.path}
+                  end={item.end}
+                  className={({ isActive }) =>
+                    `relative flex h-11 items-center gap-2 px-3 text-sm font-medium transition ${
+                      isActive
+                        ? "text-[#f3c344]"
+                        : "text-zinc-300 hover:text-white"
+                    }`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <Icon size={17} />
+                      {item.label}
+                      {isActive ? (
+                        <span className="absolute inset-x-2 -bottom-3 h-0.5 rounded-full bg-[#f3c344]" />
+                      ) : null}
+                    </>
+                  )}
+                </NavLink>
+              );
+            })}
+          </nav>
+
+          <div className="hidden w-72 items-center gap-2 rounded-xl border border-zinc-800 bg-[#111] px-4 py-3 text-zinc-500 xl:flex">
+            <Search size={17} />
             <input
-              className="w-full bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
-              placeholder="Search receipt, mobile, name"
+              className="w-full bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-500"
+              placeholder="Search receipts, customers..."
               type="search"
             />
           </div>
 
-          <button
-            className="grid h-10 w-10 place-items-center rounded-lg border border-zinc-800 bg-[#101010] text-zinc-400 transition hover:border-[#4b391d] hover:text-[#d8aa4a]"
-            title="Notifications"
-          >
-            <Bell size={17} />
-          </button>
-
-          <button className="flex items-center gap-2 rounded-lg border border-[#4b391d] bg-[#17130c] px-3 py-2 text-sm font-semibold text-[#d8aa4a] transition hover:bg-[#211a10]">
-            <LogOut size={16} />
+          <button className="flex h-11 items-center gap-2 rounded-xl border border-zinc-800 bg-[#0f0f0f] px-4 text-sm font-semibold text-zinc-100 transition hover:border-[#4b391d] hover:text-[#f3c344]">
+            <LogOut size={17} />
             Logout
           </button>
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1480px] px-6 py-6 pb-36">
+      <main className="mx-auto max-w-[1600px] px-10 py-7">
         <Outlet />
       </main>
-
-      <Dock
-        items={dockItems}
-        panelHeight={68}
-        baseItemSize={50}
-        magnification={70}
-      />
     </div>
   );
 }
