@@ -1,11 +1,22 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Epigram';
+  src: url('./assets/Epigram-OG8g4.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-sans: 'Epigram', 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
 :root {
-  color-scheme: dark;
-  font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  background: #050505;
+  color-scheme: light;
+  font-family: 'Epigram', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  background: #ebdccb;
+  color: #2c1b07;
 }
 
 * {
@@ -15,10 +26,224 @@
 body {
   margin: 0;
   min-width: 1024px;
-  background: #070707;
+  background: #ebdccb;
+  color: #2c1b07;
+  font-family: 'Epigram', 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
 button,
-input {
+input,
+select,
+textarea {
   font: inherit;
+  color: inherit;
 }
+
+/* ─── Global Parchment Overrides ────────────────────────────── */
+
+/* 1. Base card override */
+.st-card, .rp-card, .rh-sidebar-card, .cust-detail-panel,
+section.rounded-lg, aside.rounded-xl, .cust-table-panel, .rh-table-panel {
+  background: #f5eada !important;
+  border: 1px solid #c8b7a6 !important;
+  color: #2c1b07 !important;
+  box-shadow: 0 10px 30px rgba(92, 62, 22, 0.08) !important;
+}
+
+/* 2. Controls and toolbar override */
+.rp-controls, .rh-filters, .cust-table-toolbar, .cust-stats > div, .st-card-icon, .rp-summary-icon, .rh-offering-icon {
+  background: #ebd8c0 !important;
+  border: 1px solid #a89278 !important;
+  color: #2c1b07 !important;
+}
+
+/* 3. Inputs & select dropdowns */
+input:not(.login-input), select, textarea {
+  background: #fcf8f2 !important;
+  border: 1px solid #c8b7a6 !important;
+  color: #2c1b07 !important;
+}
+input:not(.login-input):focus, select:focus {
+  border-color: #5c3e16 !important;
+}
+
+/* 4. Text color rules */
+h1, h2, h3, h4, h5, h6,
+.st-title, .rp-title, .rh-title, .cust-title,
+.st-card-title, .rp-card-title, .rh-sidebar-title,
+.cust-detail-name, .st-item-label, .cust-customer-name,
+.rh-receipt-id, .rh-customer, .rh-amount, .rp-amt-cell, .rp-offering-nm,
+.text-white, .text-zinc-100, .text-zinc-200 {
+  color: #2c1b07 !important;
+}
+
+/* Subtitles, labels, and muted text */
+p, span,
+.st-subtitle, .rp-subtitle, .rh-subtitle, .cust-subtitle,
+.st-card-desc, .rp-card-sub, .st-item-icon, .st-item-arrow,
+.cust-stat-label, .rh-summary-label, .rh-legend-label, .rh-count-text,
+.text-zinc-400, .text-zinc-500 {
+  color: #6d563d !important;
+}
+
+/* Icons color fixes */
+.text-\[\#d8aa4a\], .text-\[\#f3c344\] {
+  color: #b0814c !important; /* Richer sepia-gold */
+}
+
+/* 5. Table formatting overrides */
+table {
+  background: transparent !important;
+}
+thead tr {
+  background: #dfd0bf !important;
+  border-bottom: 1px solid #c8b7a6 !important;
+}
+th {
+  color: #5c3e16 !important;
+  font-weight: 700 !important;
+}
+tbody tr {
+  border-bottom: 1px solid #e3d3be !important;
+}
+tbody tr:hover {
+  background: #e6d6c3 !important;
+}
+td {
+  color: #2c1b07 !important;
+}
+
+/* 6. Detail Drawer/Aside slideout backgrounds */
+aside, .cust-detail-panel {
+  background: #fdfaf5 !important;
+}
+
+/* 7. Scrollbars & overlays */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #ebdccb;
+}
+::-webkit-scrollbar-thumb {
+  background: #a89278;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8e7960;
+}
+
+/* 8. Tailwind utility class overrides */
+
+/* Overwrite dark background utility classes */
+.bg-\[\#101010\],
+.bg-\[\#0b0b0b\],
+.bg-\[\#0d0d0d\],
+.bg-\[\#0f0f0f\],
+.bg-\[\#070707\],
+.bg-\[\#050505\],
+.bg-\[\#111\],
+.bg-\[\#141414\],
+.bg-black,
+.bg-\[\#101010\]\/90,
+.bg-\[\#0b0b0b\]\/95,
+.bg-\[\#0b0b0b\]\/90 {
+  background-color: #f5eada !important;
+}
+
+/* Overwrite warm accent background utility classes */
+.bg-\[\#17130c\],
+.bg-\[\#1a1509\],
+.bg-\[\#1e1609\],
+.bg-\[\#0f0d09\],
+.bg-\[\#ebd8c0\],
+.bg-\[\#ebdccb\],
+.bg-\[\#f5eada\],
+.bg-\[\#0f0f0f\] {
+  background-color: #ebd8c0 !important;
+}
+
+/* Overwrite borders */
+.border-zinc-800,
+.border-zinc-900,
+.border-\[\#1f1f23\],
+.border-\[\#27272a\],
+.border-\[\#1a1a1e\],
+.border-\[\#141418\],
+.border-dashed {
+  border-color: #c8b7a6 !important;
+}
+
+.border-\[\#4b391d\],
+.border-\[\#2b2418\],
+.border-\[\#3a2e12\],
+.border-\[\#5a4422\],
+.border-\[\#352b1a\],
+.border-\[\#5c3e16\] {
+  border-color: #5c3e16 !important;
+}
+
+/* Overwrite tailwind text colors */
+.text-zinc-300,
+.text-zinc-400,
+.text-zinc-500,
+.text-zinc-600 {
+  color: #6d563d !important;
+}
+
+/* SVG Chart adjustments */
+svg line[stroke="#1f1f23"],
+svg path[stroke="#1f1f23"],
+svg line[stroke="#27272a"],
+svg path[stroke="#27272a"] {
+  stroke: #c8b7a6 !important;
+}
+svg circle[fill="#0b0b0b"],
+svg circle[fill="#0d0d0d"] {
+  fill: #ebdccb !important;
+}
+svg circle[stroke="#1a1a1e"] {
+  stroke: #dfd0bf !important;
+}
+svg text[fill="#52525b"] {
+  fill: #6d563d !important;
+}
+
+/* Specialized items overrides */
+.rh-nak-badge {
+  border: 1px solid #c8b7a6 !important;
+  background: #f5eada !important;
+  color: #5c3e16 !important;
+}
+
+.rh-badge-cash {
+  border: 1px solid #86efac !important;
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+}
+.rh-badge-upi {
+  border: 1px solid #c7d2fe !important;
+  background: #eef2ff !important;
+  color: #3730a3 !important;
+}
+.rh-badge-card {
+  border: 1px solid #bfdbfe !important;
+  background: #eff6ff !important;
+  color: #1e40af !important;
+}
+
+.dock-label {
+  background: #fdfaf5 !important;
+  border-color: #a89278 !important;
+  color: #5c3e16 !important;
+}
+
+/* Specific styling for the preview receipt card paper */
+.rounded-xl.border.border-\[\#4b391d\].bg-\[\#0b0b0b\] {
+  background-color: #fdfaf5 !important;
+  border-color: #a89278 !important;
+  box-shadow: 0 4px 15px rgba(92, 62, 22, 0.06) !important;
+}
+
+

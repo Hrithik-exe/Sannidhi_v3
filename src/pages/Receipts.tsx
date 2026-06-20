@@ -3,7 +3,6 @@ import {
   BadgeIndianRupee,
   CalendarDays,
   Gift,
-  Landmark,
   Maximize2,
   Minus,
   Phone,
@@ -331,7 +330,14 @@ export default function Receipts() {
 
         <div className="rounded-xl border border-[#4b391d] bg-[#0b0b0b] p-5">
           <div className="border-b border-dashed border-zinc-700 pb-5 text-center">
-            <Landmark size={60} className="mx-auto text-[#f3c344]" />
+            <div className="mx-auto grid h-16 w-16 place-items-center rounded-xl border border-[#4b391d] bg-[#17130c] overflow-hidden">
+              <img
+                src="/logo.jpg"
+                alt="Sannidhi Temple Logo"
+                className="h-full w-full object-cover"
+                style={{ objectPosition: "center top" }}
+              />
+            </div>
             <h3 className="mt-3 text-xl font-bold tracking-wide text-[#f3c344]">
               SANNIDHI TEMPLE
             </h3>
